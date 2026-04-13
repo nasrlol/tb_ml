@@ -1,0 +1,12 @@
+idea/
+idea
+idea/*
+.idea
+/build
+/notes.txt
+/test
+/tags
+/helper.sh
+/tests
+/tags
+/.cache/clangd/index
