@@ -2,28 +2,11 @@
 #define BASE_H
 
 /* assert an expression and output the file and the line */
-
-#define internal static
+#define internal        static
 #define global_variable static
-#define local_persist static
-
-#define ERR_OK 0
-#define ERR_IO 1
-#define ERR_PARSE 2
-#define ERR_PERM 3
-#define ERR_INVALID 4
-
-#define KiB(n) (((u64)(n)) << 10)
-#define MiB(n) (((u64)(n)) << 20)
-#define GiB(n) (((u64)(n)) << 30)
+#define local_persist   static
 
 #define unused(x) (void)(x)
-
-#define PATH_MAX_LEN 128
-#define BUFF_SMALL 128
-#define BUFF_DEFAULT 256
-#define BUFF_LARGE 512
-
 #define NIL 0
 
 #define DEPRECATED __attribute__((__deprecated__))
@@ -67,15 +50,15 @@ typedef s8  b8;
 typedef uintptr_t umm;
 typedef intptr_t  smm;
 
-#define TRUE (1 == 1)
-#define FALSE (1 != 1)
+#define True    (1 == 1)
+#define False   (1 != 1)
 
-#define RED "\x1b[31m"
-#define GREEN "\x1b[32m"
-#define RESET "\x1b[0m"
-#define BLUE "\x1b[34m"
-#define YELLOW "\x1b[33m"
+#define Red         "\x1b[31m"
+#define Green       "\x1b[32m"
+#define Reset       "\x1b[0m"
+#define Blue        "\x1b[34m"
+#define Yellow      "\x1b[33m"
 
-#define LEN(s) (sizeof(s) - 1)
+#define Len(s) (sizeof(s) - 1)
 
 #endif

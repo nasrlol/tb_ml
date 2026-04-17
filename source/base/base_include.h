@@ -9,26 +9,30 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <string.h>
+#include <math.h>
 #include <unistd.h>
+#include <time.h>
+#include <stdarg.h>
 
 #include "base.h"
 #include "base_mem.h"
+
 #include "base_arena.h"
 #include "base_stack.h"
-#include "base_string.h"
 
-#include "base_io.h"
-#include "base_error.h"
-#include "base_test.h"
-
-#ifdef BASE_UNITY
-
+#ifdef BASE_IMPLEMENTATION
 #include "base_arena.c"
-#include "base_stack.c"
-
 #endif
 
+
+#include "base_string.h"
+#include "base_string.c"
+
 #include "base_os.h"
+#include "base_error.h"
+
+#include "base_rand.h"
+
 
 
 #endif

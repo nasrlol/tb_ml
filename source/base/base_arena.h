@@ -7,6 +7,11 @@
 #define PushArray(arena, type, len) (type *)arena_alloc((arena), sizeof(type) * (len), 0)
 #define PushArrayZero(arena, type, len) (type *)arena_alloc((arena), sizeof(type) * (len), 1)
 
+#define KiB(n) (((u64)(n)) << 10)
+#define MiB(n) (((u64)(n)) << 20)
+#define GiB(n) (((u64)(n)) << 30)
+
+
 typedef struct mem_arena  mem_arena;
 struct mem_arena
 {
