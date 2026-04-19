@@ -1,27 +1,42 @@
-BIN = build/tb_ml
-SRC = source/tb_ml/tb_ml.c
+# Build configuration
+BIN := build/tb_ml
+SRC := source/tb_ml/tb_ml.c
+OBJ := build/tb_ml.o
+DEP := build/tb_ml.d
 
-# CC = gcc
-CC = clang
+# Compiler flags
+CC ?= clang
+CFLAGS := -Wall -Wextra -Wpedantic -Wno-unused-function -g --std=c99 -fno-omit-frame-pointer
+LDFLAGS := -lm
 
-COMPILER := $(shell $(CC) --version | grep -o "gcc\|clang" | head -1)
+# Optimization level
+OPT ?= 0
+CFLAGS += -O$(OPT)
 
-# check for compile optimizations per compiler
-ifeq ($(COMPILER),gcc)
-    CFLAGS = -Wall -Wextra -Wpedantic -Wno-unused-function -g -Werror -O0
-else ifeq ($(COMPILER),clang)
-    CFLAGS = -Wall -Wextra -Wpedantic -Wno-unused-function -g -O0
-else
-    CFLAGS = -Wall -Wextra -Wpedantic -Wno-unused-function -g -O0
-endif
+# Build directory
+$(shell mkdir -p build)
 
-$(BIN): $(SRC)
-	mkdir -p build
-	$(CC) $(CFLAGS) $< -o $@
+# Targets
+.PHONY: all run clean help
+
+all: $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(CFLAGS) $(LDFLAGS) $< -o $@
+
+$(OBJ): $(SRC)
+	$(CC) $(CFLAGS) -MT $@ -MMD -MP -MF $(DEP) -c $< -o $@
+
+-include $(DEP)
 
 run: $(BIN)
-	$(BIN)
+	./$(BIN)
 
-.PHONY: clean
 clean:
 	rm -rf build
+
+help:
+	@echo "make [OPT=0|1|2|3]"
+	@echo "  all    - Build (default)"
+	@echo "  run    - Build and run"
+	@echo "  clean  - Remove artifacts"
