@@ -1,5 +1,5 @@
-#ifndef STACK_H
-#define STACK_H
+#ifndef BASE_STACK_H
+#define BASE_STACK_H
 
 typedef struct mem_stack_header mem_stack_header;
 struct mem_stack_header
@@ -207,4 +207,4 @@ stack_destroy(mem_stack *stack)
     munmap(stack, stack->capacity + sizeof(mem_stack));
 }
 
-#endif
+#endif /* BASE_STACK_H  */

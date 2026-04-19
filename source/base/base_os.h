@@ -15,7 +15,6 @@ load_file(mem_arena *arena, const char *path)
     string8 result = {0};
     struct stat sbuf = {0};
 
-    // TODO(nasr): abstract this to a platform layer
     s32 file = open(path, O_RDONLY);
     if(file == -1)
     {
@@ -28,9 +27,7 @@ load_file(mem_arena *arena, const char *path)
         return (string8){0};
     }
 
-
     result = PushString8(arena, sbuf.st_size);
-
     result.size = (u64)sbuf.st_size;
     if(result.size != 0)
     {
@@ -68,8 +65,9 @@ write_file(const char *path, string8 data)
     return result;
 }
 
-#define os_write(buf, count) _os_write(STDIN_FD, buf, count)
-#define os_read(buf,  count)  _os_read(STDIN_FD, buf, count)
+#if 0
+#define os_write(buf, count) _os_write(STDOUT_FD, buf, count)
+#define os_read(buf, count) _os_read(STDIN_FD, buf, count)
 
 internal s64
 _os_write(s32 fd, void const *buf, u64 count)
@@ -82,6 +80,7 @@ _os_read(s32 fd, void *buf, u64 count)
 {
     return syscall(SYS_read, fd, buf, count);
 }
+
 
 internal void
 log_s8(string8 s)
@@ -100,9 +99,9 @@ _log(const char *str)
 #else
     unused(str);
 #endif
-
 }
 #endif
+
 
 internal void
 write_string(const char *str)
@@ -112,10 +111,11 @@ write_string(const char *str)
     os_write(str, len);
 }
 
+#endif
+
 internal void
 write_int(s32 num)
 {
-
     if (num < 0)
     {
         write(STDERR_FILENO, "-", 1);
@@ -124,22 +124,7 @@ write_int(s32 num)
     if (num >= 10) write_int(num / 10);
 
     char digit = '0' + (num % 10);
-
     write(STDERR_FILENO, &digit, 1);
 }
 
-internal inline void
-sleep_ms(long ms)
-{
-  struct timespec ts;
-  ts.tv_sec = ms / 1000;
-  ts.tv_nsec = (ms % 1000) * 1000000L;
-
-  while (nanosleep(&ts, &ts))
-  {
-    NULL;
-  }
-}
-
-
-#endif
+#endif /* BASE_IMPLEMENTATION */

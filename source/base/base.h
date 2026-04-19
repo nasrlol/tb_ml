@@ -6,6 +6,11 @@
 #define global_variable static
 #define local_persist   static
 
+#define ARENA_ALIGN (2 * sizeof(void *))
+
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+
 #define unused(x) (void)(x)
 #define NIL 0
 
@@ -60,5 +65,26 @@ typedef intptr_t  smm;
 #define Yellow      "\x1b[33m"
 
 #define Len(s) (sizeof(s) - 1)
+
+#endif
+
+#ifdef BASE_IMPLEMENTATION
+
+internal inline b8
+is_pow(umm x)
+{
+    return (x & (x - 1)) == 0;
+}
+
+internal inline u64
+align(u64 pointer, umm alignment)
+{
+    if ((alignment & (alignment - 1)) == 0)
+    {
+        return pointer;
+    }
+
+    return (pointer + alignment - 1) & ~(alignment - 1);
+}
 
 #endif

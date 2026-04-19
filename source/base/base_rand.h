@@ -8,7 +8,8 @@
 
 #endif  /* BASE_RAND_H  */
 
-#ifdef BASE_RAND_IMPLEMENTATION
+#ifdef BASE_IMPLEMENTATION
+
 internal u64
 generate_random_u64(u64 constant)
 {
