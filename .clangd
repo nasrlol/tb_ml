@@ -10,6 +10,7 @@ CompileFlags:
     - -Wno-unused-function
     - -Wno-undefined-internal
     - -Wno-implicit-function-declaration
+    - -Wno-unused-variable
     - -lm
 
   Remove:

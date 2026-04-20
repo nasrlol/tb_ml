@@ -6,7 +6,7 @@
 #define global_variable static
 #define local_persist   static
 
-#define ARENA_ALIGN (2 * sizeof(void *))
+#define arena_align (2 * sizeof(void *))
 
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))

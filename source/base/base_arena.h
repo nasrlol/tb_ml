@@ -72,7 +72,7 @@ arena_alloc(mem_arena *arena, u64 size, b32 zero)
     {
         return NULL;
     }
-    u64 aligned = Align(arena->current_position, ARENA_ALIGN);
+    u64 aligned = Align(arena->current_position, arena_align);
     u64 new_pos = aligned + size;
     if (new_pos > arena->capacity)
     {
@@ -152,7 +152,7 @@ arena_resize_align(mem_arena *arena, void *old_memory, u64 new_size, u64 old_siz
 internal mem_arena *
 arena_resize(mem_arena *arena, void *old_memory, u64 new_size, u64 old_size)
 {
-    return arena_resize_align(arena, old_memory, new_size, old_size, ARENA_ALIGN);
+    return arena_resize_align(arena, old_memory, new_size, old_size, arena_align);
 }
 
 internal temp_arena

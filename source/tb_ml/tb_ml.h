@@ -4,8 +4,10 @@
 #define TB_ML_H
 
 //- source: <math.h>
-read_only u64 epochs = 100;
-read_only f32  M_E =  2.7182818284590452354; // e
+read_only global_variable
+u64 epochs = 100;
+
+read_only global_variable f32 m_e = 2.7182818284590452354f; // e
 
 
 // traning sample

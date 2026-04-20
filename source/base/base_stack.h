@@ -114,7 +114,7 @@ stack_push_align(mem_stack *stack, u64 size, u8 alignment)
 internal void *
 stack_push(mem_stack *stack, u64 size)
 {
-    return stack_push_align(stack, size, ARENA_ALIGN);
+    return stack_push_align(stack, size, arena_align);
 }
 
 internal void

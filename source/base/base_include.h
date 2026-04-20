@@ -1,6 +1,10 @@
 #ifndef BASE_INCLUDE_H
 #define BASE_INCLUDE_H
 
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE
+#endif
+
 #include <dirent.h>
 #include <unistd.h>
 #include <sys/mman.h>
@@ -25,7 +29,7 @@
 #include "base_string.h"
 #include "base_math.h"
 #include "base_os.h"
-#include "base_error.h"
+#include "base_test.h"
 #include "base_rand.h"
 
 #endif

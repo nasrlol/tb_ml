@@ -81,6 +81,13 @@ string8_appendc(string8 *buf, u8 c)
     buf->size += 1;
 }
 
+read_only global_variable
+string8 nil_string = {
+
+    .data = NULL,
+    .size = 0,
+};
+
 #endif /* BASE_STRING_H */
 
 #ifdef BASE_IMPLEMENTATION

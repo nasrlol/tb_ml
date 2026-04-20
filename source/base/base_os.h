@@ -1,16 +1,27 @@
 #ifndef BASE_OS_H
 #define BASE_OS_H
 
+
+
 #define STDIN_FD  0
 #define STDOUT_FD 1
 #define STDERR_FD 2
 
-#endif /* BASE_OS_H */
+#define os_write_stdout(buf, count) _os_write(STDOUT_FD, (buf), (count))
+#define os_write_stderr(buf, count) _os_write(STDERR_FD, (buf), (count))
+#define os_write_stdin(buf, count)  _os_write(STDIN_FD,  (buf), (count))
 
-#ifdef BASE_IMPLEMENTATION
+#define os_read_stdout(buf)
+
+#ifdef BASE_LOGGING
+#define _logs8(buffer) os_write_stdout(buffer.data, buffeer.size);
+#else
+#define _log(buffer)
+#endif
+
 
 internal string8
-load_file(mem_arena *arena, const char *path)
+file_load(mem_arena *arena, const char *path)
 {
     string8 result = {0};
     struct stat sbuf = {0};
@@ -39,7 +50,7 @@ load_file(mem_arena *arena, const char *path)
 }
 
 internal string8
-write_file(const char *path, string8 data)
+file_write(const char *path, string8 data)
 {
     string8 result = {0};
     s32 file = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -65,66 +76,48 @@ write_file(const char *path, string8 data)
     return result;
 }
 
-#if 0
-#define os_write(buf, count) _os_write(STDOUT_FD, buf, count)
-#define os_read(buf, count) _os_read(STDIN_FD, buf, count)
-
-internal s64
-_os_write(s32 fd, void const *buf, u64 count)
-{
-    return syscall(SYS_write, fd, buf, count);
-}
-
-internal s64
-_os_read(s32 fd, void *buf, u64 count)
-{
-    return syscall(SYS_read, fd, buf, count);
-}
-
-
-internal void
-log_s8(string8 s)
-{
-    os_write(s.data, s.size);
-}
-
 #if 1
+internal s64
+_os_write(int fd, const void *buf, u64 count)
+{
+    return (u64)syscall(SYS_write, (int)fd, buf, count);
+}
+#endif
+
+#if 0
+internal ssize_t
+_os_write(int fd, const void *buf, size_t count)
+{
+    return (ssize_t) syscall(SYS_write, fd, buf, count);
+}
+#endif
+
+internal s64
+_os_read(int fd, const void *buf, u64 count)
+{
+    return (u64)syscall(SYS_read, fd, buf, count);
+}
+
+
 internal void
 _log(const char *str)
 {
 #ifdef BASE_LOGGING
     s32 len = 0;
     while (str[len]) len++;
-    os_write(str, len);
+    os_write_stdout(str, len);
 #else
     unused(str);
 #endif
 }
-#endif
-
 
 internal void
-write_string(const char *str)
+os_print_stdout_format(char *format, ...)
 {
-    s32 len = 0;
-    while (str[len]) len++;
-    os_write(str, len);
+    va_list arguments;
+    va_start(arguments, format);
+
+    vprintf(format, arguments);
 }
 
-#endif
-
-internal void
-write_int(s32 num)
-{
-    if (num < 0)
-    {
-        write(STDERR_FILENO, "-", 1);
-        num = -num;
-    }
-    if (num >= 10) write_int(num / 10);
-
-    char digit = '0' + (num % 10);
-    write(STDERR_FILENO, &digit, 1);
-}
-
-#endif /* BASE_IMPLEMENTATION */
+#endif /* BASE_OS_H */
