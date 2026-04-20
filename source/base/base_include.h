@@ -19,7 +19,7 @@
 
 #include <stdio.h>
 
-#include "base.h"
+#include "base_core.h"
 #include "base_arena.h"
 #include "base_stack.h"
 #include "base_string.h"
@@ -27,6 +27,5 @@
 #include "base_os.h"
 #include "base_error.h"
 #include "base_rand.h"
-#include "base_simd.h"
 
 #endif
