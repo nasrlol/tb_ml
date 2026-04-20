@@ -52,17 +52,20 @@ predict(f32 b1, f32 b2) {
 
 
 // using gradient descent
+// btree order
 internal model
-train(btree *bt, s32 learning_rate, f32 expected) {
+train(btree *bt, s32 learning_rate, f32 expected, f32 order) {
 
     model m = {0};
+    //- cost function
     f32 delta = -99999;
+
     struct ts *sd = btree_collect(bt);
 
     for (s32 epoch = 0; epoch < learning_rate; ++epoch)
     {
         m.value = predict(sd->y, sd->y);
-        delta = expected - delta;
+        delta = (1/ (2 * order)) * ((expected - delta) * (expected - delta));
     }
 
 

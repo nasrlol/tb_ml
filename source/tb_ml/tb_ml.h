@@ -12,8 +12,7 @@ read_only f32  M_E =  2.7182818284590452354; // e
 typedef struct ts ts;
 struct ts
 {
-    f32     w;
-    f32     y;
+    f32     w, y;
 };
 
 
