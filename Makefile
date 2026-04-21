@@ -1,39 +1,29 @@
-# Build configuration
 BIN := build/tb_ml
 SRC := source/tb_ml/tb_ml.c
-OBJ := build/tb_ml.o
 
-# Compiler
-CC ?= gcc
+CC ?= clang
 
-# Flags
-CFLAGS := -Wall -Wextra -Wpedantic -Wno-unused-function -g --std=c99 -fno-omit-frame-pointer -Wno-unused-variable
+CFLAGS :=                                    \
+-Wall -Wextra -Wpedantic                     \
+-Wno-unused-function 						 \
+--std=c99            						 \
+-fno-omit-frame-pointer -Wno-unused-variable \
+-Wno-attributes                              \
+-fno-asynchronous-unwind-tables              \
+-ftime-report                                \
+-g
+
 LDFLAGS := -lm
 
-# Optimization level
-OPT ?= 3
+OPT ?= 0
 CFLAGS += -O$(OPT)
 
-# Targets
 .PHONY: all run clean help
-
 all: clean $(BIN)
-
-$(BIN): $(OBJ)
-	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
-
-$(OBJ): $(SRC)
+$(BIN): $(SRC)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
-
+	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
 run: all
 	./$(BIN)
-
 clean:
 	rm -rf build
-
-help:
-	@echo "make [OPT=0|1|2|3]"
-	@echo "  all    - Clean and build (always recompiles)"
-	@echo "  run    - Clean, build, and run"
-	@echo "  clean  - Remove artifacts"
