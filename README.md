@@ -13,9 +13,11 @@ An attempt at writing a machine learning library in C, using `tb_db` as the data
 - [Mean Squared Error – Wikipedia](https://en.wikipedia.org/wiki/Mean_squared_error)
 - [Lineaire Benadering – Wikipedia (NL)](https://nl.wikipedia.org/wiki/Lineaire_benadering)
 - [Partial Differential Equations – Wikipedia](https://en.wikipedia.org/wiki/Partial_differential_equation)
-- [ChatGPT]  used for navigating unfamiliar topics and finding relevant material
-- [Claude]  used for mathematical implementations because I suck
 - [Lineair Regression](https://www.geeksforgeeks.org/machine-learning/ml-linear-regression/)
+
+
+> - [ChatGPT]  used for navigating unfamiliar topics and finding relevant material
+> - [Claude]  used for mathematical implementations because I suck
 ---
 
 ## Dependencies
