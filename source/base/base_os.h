@@ -1,8 +1,6 @@
 #ifndef BASE_OS_H
 #define BASE_OS_H
 
-
-
 #define STDIN_FD  0
 #define STDOUT_FD 1
 #define STDERR_FD 2
@@ -11,12 +9,15 @@
 #define os_write_stderr(buf, count) _os_write(STDERR_FD, (buf), (count))
 #define os_write_stdin(buf, count)  _os_write(STDIN_FD,  (buf), (count))
 
+
 #define os_read_stdout(buf)
 
 #ifdef BASE_LOGGING
+#define _log(format, ...) os_print_stdout_format((char *)(format), ##__VA_ARGS__)
 #define _logs8(buffer) os_write_stdout(buffer.data, buffeer.size);
 #else
 #define _log(buffer)
+#define _logs8(buffer)
 #endif
 
 
@@ -98,18 +99,6 @@ _os_read(int fd, const void *buf, u64 count)
     return (u64)syscall(SYS_read, fd, buf, count);
 }
 
-
-internal void
-_log(const char *str)
-{
-#ifdef BASE_LOGGING
-    s32 len = 0;
-    while (str[len]) len++;
-    os_write_stdout(str, len);
-#else
-    unused(str);
-#endif
-}
 
 internal void
 os_print_stdout_format(char *format, ...)

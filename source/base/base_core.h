@@ -23,16 +23,15 @@
 #define breakpoint __asm__ volatile("int3");
 #endif
 
+
 #define MemCpy(dest, src, len) memcpy((dest), (src), (len))
 #define MemSet(dest, len) memset((dest), (0), (len))
 
 #if COMPILER_MSVC
     #pragma section(".rdata$", read)
     #define read_only __declspec(allocate(".rdata$"))
-
 #elif defined(__GNUC__) || defined(__clang__)
     #define read_only __attribute__((section(".rodata")))
-
 #else
     #define read_only
 #endif
@@ -60,11 +59,13 @@ typedef intptr_t  smm;
 #define True    (1 == 1)
 #define False   (1 != 1)
 
+#if 0
 #define Red         "\x1b[31m"
 #define Green       "\x1b[32m"
 #define Reset       "\x1b[0m"
 #define Blue        "\x1b[34m"
 #define Yellow      "\x1b[33m"
+#endif
 
 #define Len(s) (sizeof(s) - 1)
 
