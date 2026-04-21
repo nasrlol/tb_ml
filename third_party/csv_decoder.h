@@ -1,6 +1,6 @@
 // single header csv decoder implementation
-#ifndef ENGINE_LEXER_H
-#define ENGINE_LEXER_H
+#ifndef CSV_DECODER_H
+#define CSV_DECODER_H
 
 enum csv_token_flags
 {
@@ -106,6 +106,7 @@ csv_table nil_csv_table =
 
 #endif /* ENGINE_LEXER_H */
 
+#ifdef CSV_IMPLEMENTATION
 internal b32
 is_nil_csv_token(csv_token *token)
 {
@@ -240,6 +241,9 @@ btree_parse_csv(mem_arena *arena, csv_token_list *ctl, csv_table *table)
 
     s32 col_index = 0;
     s32 row_index = 0;
+#ifdef CSV_DEBUG
+    s32 insert_count = 0;
+#endif
 
     // iterate over the token list while the token is not nil
     for (csv_token *ct = ctl->start_token; !is_nil_csv_token(ct); ct = ct->next_token)
@@ -287,9 +291,15 @@ btree_parse_csv(mem_arena *arena, csv_token_list *ctl, csv_table *table)
         };
 
         btree_insert(arena, tree, k, (void *)ct);
+        ++col_index;
 
-        col_index++;
+#ifdef CSV_DEBUG
+        ++insert_count;
+        _log("Inserted %d keys, root=%p, root->key_count=%d\n",
+                insert_count, tree->root, tree->root ? tree->root->key_count : -1);
+#endif
+
     }
-
     return tree;
 }
+#endif
