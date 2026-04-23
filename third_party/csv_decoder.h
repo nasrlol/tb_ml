@@ -159,7 +159,7 @@ tokenize_csv(string8 buffer, mem_arena *arena, csv_table *table, csv_token_list 
 {
     unused(token_list);
 
-    if(buffer.size == 0) return NULL;
+    assert_msg(buffer.size != 0, "[AFTER INITIALIZATION] buffer size is 0");
 
     // URGENT(nasr): segfaulting because memcpy of strring value doesnt  work dammit
     // NOPE ITS BEECAUSE WEE DONT LOAD CSV OR SOMTHING???
@@ -184,7 +184,8 @@ tokenize_csv(string8 buffer, mem_arena *arena, csv_table *table, csv_token_list 
         if(point == ',')
         {
             // emit a token for the field that ended before this comma
-            csv_token *token  = PushStructZero(arena, csv_token);
+            csv_token *token  = PushStruct(arena, csv_token);
+            token->next_token = &nil_csv_token;
 
             assert_msg(token != NULL, "did the push struct fail??");
             assert_msg(arena->current_position < arena->capacity, "no more arena size");
