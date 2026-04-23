@@ -69,10 +69,6 @@ typedef intptr_t  smm;
 
 #define Len(s) (sizeof(s) - 1)
 
-#endif
-
-#ifdef BASE_IMPLEMENTATION
-
 internal inline b8
 is_pow(umm x)
 {
@@ -90,4 +86,7 @@ align(u64 pointer, umm alignment)
     return (pointer + alignment - 1) & ~(alignment - 1);
 }
 
+
 #endif
+
+

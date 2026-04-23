@@ -33,7 +33,7 @@
       _write(": ");                                                            \
       _write((msg));                                                           \
       _write("\n");                                                            \
-      _exit(1);                                                                \
+      breakpoint;                                                              \
     }                                                                          \
   } while (0)
 

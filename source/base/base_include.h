@@ -5,23 +5,28 @@
 #define _GNU_SOURCE
 #endif
 
-#include <dirent.h>
+extern long syscall(long number, ...);
+
 #include <unistd.h>
+#include <dirent.h>
+#include <sys/syscall.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
-#include <sys/syscall.h>
 #include <fcntl.h>
-//- needed for random
 #include <time.h>
 #include <math.h>
 #include <string.h>
 #include <stdint.h>
 #include <stddef.h>
-#include <stdarg.h>
 
-#include <arm_neon.h>
-
+#ifdef BASE_LOGGING
 #include <stdio.h>
+#include <stdarg.h>
+#endif
+
+#if 0
+#include <arm_neon.h>
+#endif
 
 #include "base_core.h"
 #include "base_arena.h"

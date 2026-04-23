@@ -9,12 +9,11 @@
 #define os_write_stderr(buf, count) _os_write(STDERR_FD, (buf), (count))
 #define os_write_stdin(buf, count)  _os_write(STDIN_FD,  (buf), (count))
 
-
 #define os_read_stdout(buf)
 
 #ifdef BASE_LOGGING
 #define _log(format, ...) os_print_stdout_format((char *)(format), ##__VA_ARGS__)
-#define _logs8(buffer) os_write_stdout(buffer.data, buffeer.size);
+#define _logs8(buffer) os_write_stdout(buffer.data, buffer.size);
 #else
 #define _log(buffer)
 #define _logs8(buffer)
@@ -30,6 +29,9 @@ file_load(mem_arena *arena, const char *path)
     s32 file = open(path, O_RDONLY);
     if(file == -1)
     {
+#if 0
+        _log("file not loaded");
+#endif
         return (string8){0};
     }
 
@@ -99,14 +101,13 @@ _os_read(int fd, const void *buf, u64 count)
     return (u64)syscall(SYS_read, fd, buf, count);
 }
 
-
 internal void
 os_print_stdout_format(char *format, ...)
 {
     va_list arguments;
     va_start(arguments, format);
-
     vprintf(format, arguments);
+    va_end(arguments);
 }
 
 #endif /* BASE_OS_H */
