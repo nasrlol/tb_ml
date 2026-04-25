@@ -2,7 +2,7 @@ BIN := build/tb_ml
 SRC := source/tb_ml/tb_ml.c
 
 CC ?= gcc
-CFLAGS := -Wall -Wextra -Wpedantic -Wno-attributes \
+CFLAGS :=  -Wno-attributes \
           -fno-omit-frame-pointer -Wno-unused-variable \
           -Wno-unused-function -fno-asynchronous-unwind-tables \
           -ftime-report -O0 --std=c99 -g
