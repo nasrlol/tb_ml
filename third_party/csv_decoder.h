@@ -113,6 +113,23 @@ is_nil_csv_token(csv_token *token)
     return ((token == NULL) || (token == &nil_csv_token));
 }
 
+
+#if 1
+internal void
+csv_token_list_append_token(csv_token_list *source_token_list, csv_token *source_token)
+{
+    source_token->next_token = NULL;
+
+    if(source_token_list->start_token == NULL) {
+        source_token_list->start_token = source_token;
+        source_token_list->end_token   = source_token;
+    } else {
+        source_token_list->end_token->next_token = source_token;
+        source_token_list->end_token             = source_token;
+    }
+}
+#else
+
 // TODO(nasr): segfaulting because end_token not allocated
 internal void
 csv_token_list_append_token(csv_token_list *source_token_list, csv_token *source_token)
@@ -120,6 +137,7 @@ csv_token_list_append_token(csv_token_list *source_token_list, csv_token *source
     source_token_list->end_token->next_token = source_token;
     source_token_list->end_token             = source_token;
 }
+#endif
 
 //- concatenate 2 token lists so we can handle parsing individual rows and concatenating them to eachother
 internal void
@@ -247,7 +265,7 @@ btree_parse_csv(mem_arena *arena, csv_token_list *ctl, csv_table *table)
 #endif
 
     // iterate over the token list while the token is not nil
-    for (csv_token *ct = ctl->start_token; !is_nil_csv_token(ct); ct = ct->next_token)
+    for (csv_token *ct = ctl->start_token; ct != NULL ; ct = ct->next_token)
     {
         {
             //- are we parsing the first line tokens?
@@ -270,6 +288,7 @@ btree_parse_csv(mem_arena *arena, csv_token_list *ctl, csv_table *table)
                 else
                 {
                     // TODO(nasr): logging i think. came back after a while and forgot the progress on the csv decoder. this looked empty and dont file like reading the code
+                    //
                 }
 
                 // FL tokens are structural, no value to index
