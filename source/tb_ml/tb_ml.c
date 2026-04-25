@@ -62,8 +62,8 @@ normalize_training_data_btree(btree *bt) {
     btree_node *current_node = bt->root;
     s32 kc = current_node->key_count;
 
-    for (s32 index = 0; index < kc; ++index) {
-        for (s32 nested_index = 0; nested_index < kc; ++nested_index) {
+    for(s32 index = 0; index < kc; ++index) {
+        for(s32 nested_index = 0; nested_index < kc; ++nested_index) {
             sample.w += current_node->keys[nested_index].header_index;
             sample.y += current_node->keys[nested_index].row_index;
         }
